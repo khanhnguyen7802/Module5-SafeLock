@@ -9,7 +9,7 @@ import time
 L1 = 5 #29
 L2 = 6 #31
 L3 = 13 #33
-L4 = 19 #35 - 35
+L4 = 19 #35 
 
 # These are the four columns
 C1 = 12 #32
