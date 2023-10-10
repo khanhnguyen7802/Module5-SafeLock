@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="design.css">
-    <title>Page Title</title>
+    <title>SAFEty</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <script type="module" src="./Functions/googleMaps.js"></script>
 </head>
 <body>
     <div class="topnav">
-        <h1 class="title">SAFEty</h1>
-        <a class="active" href="">Home</a>
-        <a onclick="location.href = 'profilePage.html'"> <img class="user-image" src="logo user.png"> Profile</a>
+        <img class="title" src="Logo%20inverted%20gray%20tho.png">
+        <div class="dropdown">
+            <button class="logOut"><img class="user-image" src="userLogo.png">Log Out</button>
+            <div class="dropdown-content">
+                <a rel="noopener" target="_blank" href="index.html">Log Out</a>
+            </div>
+        </div>
+
+
+<!--        <a><img class="user-image" src="userLogo.png"> User</a>-->
     </div>
+
+<!--    <button class="logOut" onclick="location.href = 'index.html'">Log Out</button>-->
 
     <!--The div element for the map -->
     <div id="map"></div>
