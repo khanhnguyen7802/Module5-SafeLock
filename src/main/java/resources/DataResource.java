@@ -16,3 +16,5 @@ public class DataResource {
         return Response.status(200).entity("Data received successfully").build();
     }
 }
+
+///Not working properly
