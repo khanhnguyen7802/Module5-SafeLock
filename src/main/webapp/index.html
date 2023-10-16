@@ -2,9 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="WebDevelopment/design.css">
+    <title>Log In</title>
 </head>
 <body>
-For the people, By the people, To the people.
+<form action="action_page.php" method="post">
+    <div class="imgcontainer">
+        <img src="WebDevelopment/LOGOSAFEty.png" alt="Avatar" class="avatar">
+    </div>
+
+    <div class="container">
+        <label ><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="uname" required>
+
+        <label ><b>Password</b></label>
+        <input type="text" placeholder="Enter Password" name="psw" required>
+
+        <button type="submit" onclick="location.href = 'homePage.html'">Login</button>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+        <span class="signUp">Not a user yet? <a href="WebDevelopment/signUp.html"> Signup</a></span>
+        <span class="psw">Forgot <a href="">password?</a></span>
+    </div>
+</form>
 </body>
 </html>
