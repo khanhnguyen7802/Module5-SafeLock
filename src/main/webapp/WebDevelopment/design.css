@@ -8,6 +8,10 @@ body {
 
 }
 
+.indexBody {
+    background-color: #4c4c4c;
+}
+
 #map {
     left: 25%;
     top: 10%;
@@ -32,18 +36,6 @@ body {
     position: relative;
 }
 
-/* Change the color of links on hover */
-.topnav a:hover {
-    background-color: darkslategrey;
-    color: black;
-}
-
-/* Add a color to the active/current link */
-.topnav a.active {
-    background-color: deeppink;
-    color: white;
-}
-
 .user-image {
     height: 55%;
     width: auto;
@@ -61,7 +53,7 @@ body {
 
 /* Bordered form */
 form {
-    border: 3px solid #f1f1f1;
+    border: 3px solid white;
     width: 50%;
     position: relative;
     left: 25%;
@@ -133,33 +125,6 @@ span.signUp {
     font-size: 18px;
 }
 
-.dropdown {
-    display: inline-block;
-    position: relative;
-    float: right;
-    overflow: hidden;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    width: 100%;
-    overflow: auto;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-content a {
-    display: block;
-    color: #000000;
-    padding: 5px;
-    text-decoration: none;
-}
-
-.dropdown-content a:hover {
-    color: #FFFFFF;
-    background-color: #00A4BD;
+.formContainer {
+    background-color: white;
 }
