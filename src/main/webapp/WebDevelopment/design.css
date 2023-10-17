@@ -34,6 +34,7 @@ body {
     font-size: 30px;
     height: 100%;
     position: relative;
+    bottom: 7%;
 }
 
 .user-image {
@@ -52,7 +53,7 @@ body {
 }
 
 /* Bordered form */
-form {
+.formContainer {
     border: 3px solid white;
     width: 50%;
     position: relative;
@@ -61,7 +62,7 @@ form {
 }
 
 /* Full-width inputs */
-input[type=text] {
+input[type=text],[type=password] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -127,4 +128,8 @@ span.signUp {
 
 .formContainer {
     background-color: white;
+}
+
+h4 {
+    color: red;
 }
