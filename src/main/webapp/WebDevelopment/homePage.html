@@ -5,15 +5,15 @@
     <link rel="stylesheet" type="text/css" href="design.css">
     <title>SAFEty</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-
+    <script src="Functions/username.js"></script>
     <script type="module" src="Functions/googleMaps.js"></script>
 </head>
-<body>
+<body onload="loadUsername()">
     <div class="topnav">
         <img class="title" src="Logoinvertedgraytho.png">
 
 
-        <a><img class="user-image" src="userLogo.png"> User</a>
+        <a id="userTitle"><img class="user-image" src="userLogo.png"> User</a>
     </div>
 
     <button class="logOut" onclick="location.href = '../index.html'">Log Out</button>
