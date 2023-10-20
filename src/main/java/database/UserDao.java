@@ -5,10 +5,11 @@ import model.User;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserDao {
+public enum UserDao {
+    instance;
     private Map<String, User> userMap;
 
-    public UserDao() {
+    private UserDao() {
         this.userMap = new HashMap<>();
     }
 
@@ -18,5 +19,9 @@ public class UserDao {
 
     public User selectUser(String username) {
         return userMap.get(username);
+    }
+
+    public Map<String, User> getUserMap() {
+        return userMap;
     }
 }

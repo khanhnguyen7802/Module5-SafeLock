@@ -51,7 +51,6 @@ public class UserDatabase {
                     String name = rs.getString("username");
                     String password = rs.getString("password");
                     user = new User();
-                    user.setId(id);
                     user.setName(name);
                     user.setPassword(password);
                 }
