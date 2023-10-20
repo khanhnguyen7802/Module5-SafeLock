@@ -7,7 +7,7 @@ import java.util.Map;
 
 public enum UserDao {
     instance;
-    private Map<String, User> userMap;
+    private Map<String, User> userMap = new HashMap<>();
 
     private UserDao() {
         User user1 = new User("Samthing","ppap1234");
