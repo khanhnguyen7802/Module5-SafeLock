@@ -25,8 +25,12 @@ public class UserResource {
     }
 
     private boolean isValidUser(String username, String password) {
-        // Here, you can implement your validation logic, possibly checking against a database or any other data store.
-        // For the purpose of this example, we are using a hardcoded username and password.
-        return UserDao.instance.getUserMap().get(username).getPassword().equals(password);
+        // Check if the user exists
+        User user = UserDao.instance.selectUser(username);
+        if (user != null) {
+            // Here you should use secure methods such as hashing for password comparison
+            return user.getPassword().equals(password);
+        }
+        return false;
     }
 }

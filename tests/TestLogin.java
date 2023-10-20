@@ -13,16 +13,16 @@ public class TestLogin{
     @Test
     public void testLogin() {
         String BASE_URL = "http://localhost:8080/SAFEty/api";
-        UserDao.instance.insertUser(new model.User("testUser", "testPassword"));
 
         WebTarget target = ClientBuilder.newClient().target(BASE_URL + "/login");
 
         Form form = new Form();
-        form.param("username", "testUser");
-        form.param("password", "testPassword");
+        form.param("username", "Samthing");
+        form.param("password", "ppap1234");
 
         Response response = target.request().post(Entity.form(form));
         assertEquals(200, response.getStatus(), "Valid user login test failed");
+
 
         Form invalidForm = new Form();
         invalidForm.param("username", "testUser");

@@ -13,7 +13,7 @@ public enum UserDao {
         User user1 = new User("Samthing","ppap1234");
         userMap.put("Samthing",user1);
         User user2 = new User("shunshun","ppap1234");
-        userMap.put("shunshun",user1);
+        userMap.put("shunshun",user2);
     }
 
     public void insertUser(User user) {
