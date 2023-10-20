@@ -2,23 +2,23 @@ function login() {
     try {
         let username = document.getElementById('username').value;
         let password = document.getElementById('password').value;
-        let login = false;
+        let login = true;
         if (username !== '' && password !== '') {
-            let json = {username: username, password: password}
-            fetch("http://localhost:8080/SAFEty/login",
-                {
-                    method: "POST",
-                    body: JSON.stringify(json),
-                    headers: {
-                        "Content-type": "application/json"
-                    }
-                }
-            ).then(
-                response => {
-                    login = response.ok
-                    return response.text()
-                }
-            )
+        //     let json = {username: username, password: password}
+        //     fetch("http://localhost:8080/SAFEty/login",
+        //         {
+        //             method: "POST",
+        //             body: JSON.stringify(json),
+        //             headers: {
+        //                 "Content-type": "application/json"
+        //             }
+        //         }
+        //     ).then(
+        //         response => {
+        //             login = response.ok
+        //             return response.text()
+        //         }
+        //     )
             //check if login is correct
             console.log("username: " + username + ", password: " + password);
             if (login) {
@@ -32,7 +32,9 @@ function login() {
         }
 
 
-    } catch(e) {
-        console.log("error");
-    }
+    } catch(e)
+{
+    console.log("error");
+}
+
 }
