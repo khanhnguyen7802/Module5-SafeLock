@@ -10,7 +10,10 @@ public enum UserDao {
     private Map<String, User> userMap;
 
     private UserDao() {
-        this.userMap = new HashMap<>();
+        User user1 = new User("Samthing","ppap1234");
+        userMap.put("Samthing",user1);
+        User user2 = new User("shunshun","ppap1234");
+        userMap.put("shunshun",user1);
     }
 
     public void insertUser(User user) {
