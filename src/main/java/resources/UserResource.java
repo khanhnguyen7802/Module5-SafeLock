@@ -1,5 +1,7 @@
 package resources;
+
 import database.UserDao;
+import database.UserDatabase;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.POST;
@@ -8,15 +10,24 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import model.User;
 
-@Path("/login")
+@Path("/user")
 public class UserResource {
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
 
     @POST
+    @Path("/signup")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response signup(@FormParam(USERNAME) String username, @FormParam(PASSWORD) String password) {
+        User user = new User(username, password);
+        UserDatabase.insertUser(user);
+        return Response.ok("Signup successful").build();
+    }
+
+    @POST
+    @Path("/login")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response login(@FormParam(USERNAME) String username, @FormParam(PASSWORD) String password) {
-        // Here, you can implement your authentication logic
         if (isValidUser(username, password)) {
             return Response.ok("Login Successful").build();
         } else {
@@ -25,12 +36,7 @@ public class UserResource {
     }
 
     private boolean isValidUser(String username, String password) {
-        // Check if the user exists
-        User user = UserDao.instance.selectUser(username);
-        if (user != null) {
-            // Here you should use secure methods such as hashing for password comparison
-            return user.getPassword().equals(password);
-        }
-        return false;
+        User user = UserDatabase.selectUser(username);
+        return user != null && user.getPassword().equals(password);
     }
 }
