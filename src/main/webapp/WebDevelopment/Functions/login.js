@@ -9,7 +9,7 @@ function login() {
 
         if (username !== '' && password !== '') {
             let json = {username: username, password: password}
-            fetch("http://localhost:8080/SAFEty/api/login",
+            fetch("http://localhost:8080/SAFEty/api/user/login",
                 {
                     method: "POST",
                     body: formData,

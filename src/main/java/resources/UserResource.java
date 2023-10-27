@@ -1,6 +1,5 @@
 package resources;
 
-import database.UserDao;
 import database.UserDatabase;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.FormParam;
@@ -37,6 +36,7 @@ public class UserResource {
 
     private boolean isValidUser(String username, String password) {
         User user = UserDatabase.selectUser(username);
+        System.out.println(user.getName() + user.getPassword());
         return user != null && user.getPassword().equals(password);
     }
 }

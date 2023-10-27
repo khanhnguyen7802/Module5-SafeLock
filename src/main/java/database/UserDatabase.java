@@ -13,7 +13,8 @@ public class UserDatabase {
     private static final String USER = "postgres";
     private static final String PASSWORD = "Sairen1360!";
 
-    public static Connection connect() throws SQLException {
+    public static Connection connect() throws SQLException, ClassNotFoundException {
+        Class.forName("org.postgresql.Driver");
         return DriverManager.getConnection(DB_URL, USER, PASSWORD);
     }
 
@@ -24,7 +25,7 @@ public class UserDatabase {
             statement.setString(1, user.getName());
             statement.setString(2, user.getPassword());
             statement.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -42,7 +43,7 @@ public class UserDatabase {
                 String password = resultSet.getString("password");
                 user = new User(name, password);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return user;
