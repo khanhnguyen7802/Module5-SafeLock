@@ -38,7 +38,7 @@ public class UserDatabase {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                String name = resultSet.getString("name");
+                String name = resultSet.getString("username");
                 String password = resultSet.getString("password");
                 user = new User(name, password);
             }
