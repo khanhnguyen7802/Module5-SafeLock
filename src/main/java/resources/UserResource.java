@@ -36,15 +36,15 @@ public class UserResource {
         User user = UserDatabase.selectUser(username);
         return user != null && user.getPassword().equals(password);
     }
-//    @GET
-//    @Path("/gps")
-//    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-//    public Response getGPS(@FormParam(USERNAME) String username) {
-//        String gps = UserDatabase.getGPS(username);
-//        if (gps != null) {
-//            return Response.ok(gps).build();
-//        } else {
-//            return Response.status(Response.Status.NOT_FOUND).entity("GPS not found for the user").build();
-//        }
-//    }
+    @POST
+    @Path("/gps")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response getGPS(@FormParam(USERNAME) String username) {
+        String gps = UserDatabase.getGPS(username);
+        if (gps != null) {
+            return Response.ok(gps).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).entity("GPS not found for the user").build();
+        }
+    }
 }
