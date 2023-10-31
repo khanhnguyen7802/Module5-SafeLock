@@ -48,4 +48,31 @@ public class UserDatabase {
         }
         return user;
     }
+    public static void updateGPS(String username, String gps){
+        try (Connection connection = connect()) {
+            String query = "UPDATE users SET gps = ? WHERE username = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, gps);
+            statement.setString(2, username);
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getGPS(String username) {
+        try (Connection connection = connect()) {
+            String query = "SELECT gps FROM users WHERE username = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("gps");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
