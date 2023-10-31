@@ -4,8 +4,12 @@ let map;
 async function initMap() {
     // The location of Uluru
     // fetch location
-    const latitude = 52.2397;
-    const longitude = 6.8498;
+    console.log("Generating map");
+
+    const latitude = Math.random() * 170 - 85;
+    console.log(latitude);
+    const longitude = Math.random() * 360 - 180;
+    console.log(longitude);
     const position = { lat: latitude, lng: longitude };
 
     // Request needed libraries.
@@ -27,6 +31,10 @@ async function initMap() {
         title: "Uluru",
     });
 }
-
 initMap();
+
+async function resetMap() {
+    document.getElementById("map").remove();
+    initMap();
+}
 

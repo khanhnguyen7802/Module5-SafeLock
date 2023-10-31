@@ -133,3 +133,17 @@ span.signUp {
 h4 {
     color: red;
 }
+
+.refresher {
+    background-color: #4c4c4c;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 10%;
+}
+
+.refresher:hover {
+    opacity: 0.8;
+}
