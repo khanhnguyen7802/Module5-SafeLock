@@ -14,6 +14,7 @@ function signup() {
         } else if (password !== password2) {
                 document.getElementById("mistakeMessage").innerText = "The passwords have to be the same";
             } else {
+            console.log("fetching")
                 fetch("http://localhost:8080/SAFEty/api/user/signup",
                     {
                         method: "POST",
@@ -25,6 +26,7 @@ function signup() {
                     ).then(
                     response => {
                         if (response.ok) {
+                            console.log("reach here")
                             window.location.href = "../index.html";
                         }
                     }
