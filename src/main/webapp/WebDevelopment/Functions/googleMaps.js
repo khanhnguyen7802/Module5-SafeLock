@@ -9,7 +9,7 @@ async function initMap() {
     username = username.split("?")[1];
     let formData = new URLSearchParams();
     formData.append('username', username);
-    fetch("http://localhost:8080/SAFEty/api/gps",
+    fetch("http://localhost:8080/SAFEty/api/user/gps",
         {
             method: "POST",
             body: formData,
@@ -19,9 +19,7 @@ async function initMap() {
         }
     ).then(
         response => {
-            if (response.ok) {
-                window.location.href = "../index.html";
-            }
+            console.log(response.text())
         }
     )
     const latitude = Math.random() * 170 - 85;
