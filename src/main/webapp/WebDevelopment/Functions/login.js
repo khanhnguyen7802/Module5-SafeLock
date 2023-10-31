@@ -33,8 +33,6 @@ function login() {
             document.getElementById("mistakeMessage").innerText = "Please fill in both the username and password";
             console.log("Fill in both username and password");
         }
-
-
     } catch(e)
 {
     console.log("error");
