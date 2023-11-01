@@ -48,6 +48,17 @@ public class UserDatabase {
         }
         return user;
     }
+    public static void updatePassword(String username, String newPassword) {
+        try (Connection connection = connect()) {
+            String query = "UPDATE users SET password = ? WHERE username = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, newPassword);
+            statement.setString(2, username);
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     public static void updateGPS(String username, String gps){
         try (Connection connection = connect()) {
             String query = "UPDATE users SET gps = ? WHERE username = ?";

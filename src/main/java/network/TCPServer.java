@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import database.UserDatabase;
 
 public class TCPServer {
     public static void main(String[] args) throws Exception {
@@ -22,7 +23,22 @@ public class TCPServer {
             Socket socket = serverSocket.accept();
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String inputData = input.readLine();
-            System.out.println("Received data: " + inputData);
+
+            if(inputData.startsWith("GPS")){
+                String[] splits = inputData.split("~");
+                String username = splits[1];
+                String newGPS = splits[2];
+                UserDatabase.updateGPS(username,newGPS);
+
+            } else if (inputData.startsWith("UPDATE")) {
+                String[] splits = inputData.split("~");
+                String username = splits[1];
+                String newPassword = splits[2];
+                UserDatabase.updatePassword(username,newPassword);
+
+            }else {
+                System.out.println("Received data: " + inputData);
+            }
             socket.close();
         }
     }
