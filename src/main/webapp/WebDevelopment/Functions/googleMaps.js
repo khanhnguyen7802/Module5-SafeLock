@@ -9,7 +9,8 @@ async function initMap() {
     username = username.split("?")[1];
     let formData = new URLSearchParams();
     formData.append('username', username);
-    fetch("http://localhost:8080/SAFEty/api/user/gps",
+    let gpsData = "";
+    await fetch("http://localhost:8080/SAFEty/api/user/gps",
         {
             method: "POST",
             body: formData,
@@ -19,12 +20,18 @@ async function initMap() {
         }
     ).then(
         response => {
-            console.log(response.text())
+            return response.text();
         }
+        ).then(
+            data => {
+                console.log(data);
+                gpsData = data;
+            }
     )
-    const latitude = Math.random() * 170 - 85;
+    let gpsDataSplit = gpsData.split(",");
+    const latitude = parseFloat(gpsDataSplit[0]);
     console.log(latitude);
-    const longitude = Math.random() * 360 - 180;
+    const longitude = parseFloat(gpsDataSplit[1]);
     console.log(longitude);
     const position = { lat: latitude, lng: longitude };
 
