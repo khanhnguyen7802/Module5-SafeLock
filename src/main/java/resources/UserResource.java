@@ -32,6 +32,17 @@ public class UserResource {
         }
     }
 
+    @PUT
+    @Path("/update")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response updateUser(@FormParam("username") String username, @FormParam("newPassword") String newPassword) {
+        // Call the method to update the user's password
+        UserDatabase.updatePassword(username, newPassword);
+
+        return Response.ok("User information updated").build();
+    }
+
+
     private boolean isValidUser(String username, String password) {
         User user = UserDatabase.selectUser(username);
         return user != null && user.getPassword().equals(password);
