@@ -47,4 +47,18 @@ public class UserResource {
             return Response.status(Response.Status.NOT_FOUND).entity("GPS not found for the user").build();
         }
     }
+    @POST
+    @Path("/brute")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getBrute() {
+        int count = UserDatabase.getBrute();
+        return "Brute Force count: " + count;
+    }
+
+    @DELETE
+    @Path("/brute")
+    public Response deleteBrute() {
+        UserDatabase.deleteBrute();
+        return Response.ok("Brute table cleared").build();
+    }
 }
