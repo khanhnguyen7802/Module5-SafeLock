@@ -30,6 +30,7 @@ public class TCPServer {
                 char[] chars = username.toCharArray();
                 if ((chars[0] >= 'a' && chars[0] <= 'z') || (chars[0] >= 'A' && chars[0] <= 'Z')){
                     String newGPS = splits[2];
+                    System.out.println(newGPS);
                     String point = newGPS.split(",")[0];
                      if (!point.equals("")) {
                          UserDatabase.updateGPS(username, newGPS);
@@ -45,12 +46,16 @@ public class TCPServer {
                 char[] chars = username.toCharArray();
                 if ((chars[0] >= 'a' && chars[0] <= 'z') || (chars[0] >= 'A' && chars[0] <= 'Z')){
                     String newPassword = splits[2];
+                    System.out.println(newPassword);
                     if (!newPassword.equals("")){
                         UserDatabase.updatePassword(username,newPassword);
                     }else{
                         System.out.println("The password is blank");
                     }
-                }else {
+                } else if (inputData.startsWith("BRUTE")) {
+                    System.out.println("Brute Force detected!");
+                    UserDatabase.addBrute();
+                } else {
                     System.out.println("The username is not allowed");
                 }
             }else {

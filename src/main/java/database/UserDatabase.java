@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class UserDatabase {
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/project";
@@ -86,4 +88,44 @@ public class UserDatabase {
         }
         return null;
     }
+    public static int getBrute() {
+        int count = 0;
+        try (Connection connection = connect()) {
+            String query = "SELECT COUNT(attack) FROM brute";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+    public static void deleteBrute() {
+        try (Connection connection = connect()) {
+            String query = "DELETE FROM brute";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void addBrute() {
+        try (Connection connection = connect()) {
+            String query = "INSERT INTO brute (attack) VALUES (?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date();
+            String formattedDate = formatter.format(date);
+
+            statement.setString(1, formattedDate);
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
