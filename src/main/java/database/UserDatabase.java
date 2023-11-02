@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDatabase {
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/project";
+    private static final String DB_URL = "jdbc:postgresql://145.126.3.135:5432/project";
     private static final String USER = "postgres";
     private static final String PASSWORD = "Sairen1360!";
 
@@ -59,11 +59,11 @@ public class UserDatabase {
             e.printStackTrace();
         }
     }
-    public static void updateGPS(String username, String gps){
+    public static void updateGPS(String username, String lat, String longt){
         try (Connection connection = connect()) {
             String query = "UPDATE users SET gps = ? WHERE username = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, gps);
+            statement.setString(1, lat + ", " +longt);
             statement.setString(2, username);
             statement.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {

@@ -24,11 +24,17 @@ public class TCPServer {
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String inputData = input.readLine();
 
+            System.out.println("Received data: " + inputData);
+
             if(inputData.startsWith("GPS")){
+                System.out.println("receieved GPS :D 8====D");
+                System.out.println(inputData);
                 String[] splits = inputData.split("~");
                 String username = splits[1];
-                String newGPS = splits[2];
-                UserDatabase.updateGPS(username,newGPS);
+                String lat = splits[2];
+                String longt = splits[3];
+                System.out.println(lat + ", " + longt);
+                UserDatabase.updateGPS(username,lat, longt);
 
             } else if (inputData.startsWith("UPDATE")) {
                 String[] splits = inputData.split("~");
