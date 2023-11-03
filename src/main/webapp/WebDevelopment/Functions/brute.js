@@ -14,6 +14,7 @@ function clearBruteTable() {
             console.log(data);
         })
         .catch(error => console.error('Error:', error));
+    window.location.href = window.location.pathname;
 }
 
 fetchBruteCount();
