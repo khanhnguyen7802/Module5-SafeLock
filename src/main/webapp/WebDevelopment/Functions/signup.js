@@ -9,8 +9,8 @@ function signup() {
     if (username !== "" && serialNumber !== "" && password !== "" && password2 !== "") {
         if (username.length < 5 || username.length > 15) {
             document.getElementById("mistakeMessage").innerText = "Username has to be between 5 and 15 characters long";
-        } else  if (password.length < 6) {
-            document.getElementById("mistakeMessage").innerText = "Password has to be more than 6 characters";
+        } else  if (password.length !== 4 || isNaN(password)){
+            document.getElementById("mistakeMessage").innerText = "Password has to be exactly 4 digits";
         } else if (password !== password2) {
                 document.getElementById("mistakeMessage").innerText = "The passwords have to be the same";
             } else {
