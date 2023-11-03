@@ -22,7 +22,7 @@ function login() {
                     login = response.ok
                     console.log("Username: " + username + "\nPassword: " + password);
 
-                    if (login && username === 'admin') {
+                    if (login && username.startsWith("admin")) {
                         console.log("It worked bitches");
                         window.location.href = "../SAFEty/WebDevelopment/homePage.html?" + username;
                     } else {
