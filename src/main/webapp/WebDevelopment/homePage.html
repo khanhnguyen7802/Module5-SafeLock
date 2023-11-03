@@ -7,6 +7,7 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="Functions/username.js"></script>
     <script type="module" src="Functions/googleMaps.js"></script>
+    <script src="Functions/brute.js"></script>
 </head>
 <body onload="loadUsername()">
     <div class="topnav">
@@ -20,6 +21,12 @@
 
     <!--The div element for the map -->
     <div id="map"></div>
+
+    <!--The div element for the brute -->
+    <div id="brute">
+        <p id="bcount" onload="fetchBruteCount()"></p>
+        <button id="bdelete" onclick="clearBruteTable()">DELETE</button>
+    </div>>
 
     <button class="refresher" onclick="window.location = window.location.href">Refresh Location</button>
     <!-- prettier-ignore -->
