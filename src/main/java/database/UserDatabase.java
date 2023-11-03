@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UserDatabase {
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/project";
+    private static final String DB_URL = "jdbc:postgresql://145.126.3.135:5432/project";
     private static final String USER = "postgres";
     private static final String PASSWORD = "Sairen1360!";
 
