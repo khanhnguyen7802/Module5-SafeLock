@@ -1,38 +1,39 @@
 import RPi.GPIO as GPIO
 import time
 
-# Define the GPIO pin for the sound sensor
-SOUND_SENSOR_PIN = 17
+import sys
 
-# Set up GPIO mode and warnings
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
+name = "dany" #replace this with your username
+sys.path.append(f'/home/{name}/Project/buzzer')
 
-# Initialize GPIO pin for the sound sensor
-GPIO.setup(SOUND_SENSOR_PIN, GPIO.IN)
+import buzzer
+import melodies
 
-# Variables to track claps
-clap_count = 0
-clap_threshold = 2  # Adjust as needed
+buzzer.init_buzzer(25)
 
-try:
-    while True:
-        # Read the digital input from the sound sensor
-        sound_detected = GPIO.input(SOUND_SENSOR_PIN)
+pin = 17
 
-        if sound_detected:
-            clap_count += 1
-            print("Sound detected (Clap {})!".format(clap_count))
+def init_sound_sensor(number):
 
-            # Check if the number of claps reaches the threshold
-            if clap_count >= clap_threshold:
-                print("Clap detected!")
-                # Add your action to be taken when a clap is detected here
-                clap_count = 0  # Reset the clap count
+    """
+    Connect the sensor using 3.3v, GND and pin.
+    """
+    pin = number
+    
+    GPIO.setmode (GPIO.BCM)
+    GPIO.setup(pin, GPIO.IN)
 
-        # Add a small delay to avoid rapid clap counting
-        time.sleep(0.1)
+def detect_sound():
+    """
+    Boolean function. Returns true if clap detected.
+    """
+    if GPIO.input(pin):
+        buzzer.play_melody(melodies.round.MELODY, melodies.round.DURATIONS)
+        time.sleep(1)
+        return True
+        
+#test code
+init_sound_sensor(17)
+while True:
+    detect_sound()
 
-except KeyboardInterrupt:
-    # Clean up GPIO on program exit
-    GPIO.cleanup()
