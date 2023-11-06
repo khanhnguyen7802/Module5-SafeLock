@@ -1,5 +1,6 @@
 package resources;
 
+import database.SaltHashing;
 import database.UserDatabase;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -45,7 +46,9 @@ public class UserResource {
 
     private boolean isValidUser(String username, String password) {
         User user = UserDatabase.selectUser(username);
-        return user != null && user.getPassword().equals(password);
+        String salt = UserDatabase.getSalt(username);
+        String hashedpassword = SaltHashing.saltSHA256(password,SaltHashing.toByteArray(salt));
+        return user != null && user.getPassword().equals(hashedpassword);
     }
     @POST
     @Path("/gps")
