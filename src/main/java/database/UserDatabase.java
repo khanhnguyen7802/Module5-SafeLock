@@ -2,6 +2,8 @@ package database;
 
 import model.User;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.Security;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,13 +24,21 @@ public class UserDatabase {
 
     public static void insertUser(User user) {
         try (Connection connection = connect()) {
-            String query = "INSERT INTO users (username, password) VALUES (?, ?)";
+            String query = "INSERT INTO users (username, password,salt) VALUES (?, ?,?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, user.getName());
-            statement.setString(2, user.getPassword());
+
+            byte[] byteSalt = SaltHashing.getSalt();
+            String salt = SaltHashing.toHex(byteSalt);
+            String securePassword = SaltHashing.saltSHA256(user.getPassword(),byteSalt);
+            statement.setString(2, securePassword);
+            statement.setString(3,salt);
+
             statement.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -126,6 +136,21 @@ public class UserDatabase {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+    public static String getSalt(String username) {
+        try (Connection connection = connect()) {
+            String query = "SELECT salt FROM users WHERE username = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("salt");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
