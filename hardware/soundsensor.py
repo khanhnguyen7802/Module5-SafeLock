@@ -33,7 +33,8 @@ def detect_sound():
         return True
         
 #test code
-init_sound_sensor(17)
-while True:
-    detect_sound()
+def make_sound():
+    init_sound_sensor(17)
+    while True:
+        detect_sound()
 

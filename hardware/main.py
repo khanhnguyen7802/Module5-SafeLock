@@ -62,50 +62,51 @@ def settings():
         character = None
         character = keypad.read()
         if character == "A":
-            i =1
+            i = 1
         elif character == "B":
             i = 2
         elif character == "C":
             quit = True
 
-try:
-    servo.lock()
-    while True:
-        interfaces.d_print(0)
-        
-        character = None
-        character = keypad.read()
-        if character != None:
-            if character == "*":
-                input = ""
-                interfaces.output = "____"
-            elif character == "#":
-                if input == password[0]:
-                    interfaces.d_print(2)
-                    buzzer.play_melody(melodies.round.MELODY, melodies.round.DURATIONS)
-                    user_interface()
-                elif input == password[1]:
-                    interfaces.d_print(2)
-                    buzzer.play_melody(melodies.round.MELODY, melodies.round.DURATIONS)
-                    admin()
-                else:
-                    interfaces.d_print(3)
-                    buzzer.play_melody(melodies.rickroll.MELODY, melodies.rickroll.DURATIONS)
-                interfaces.output = "____"
-                input = ""
-            elif len(input) < 4:
-                if character not in invalid:
-                    input = input + character
-                    interfaces.output = ""
-                    i = 0
-                    while i < len(input):
-                        i += 1
-                        interfaces.output += "*"
-                    while len(interfaces.output) < 4:
-                        interfaces.output += "_"
-                else:
-                    interfaces.d_print(1)
-                    
-except KeyboardInterrupt:
-    print("\nstopping program")
-    display.lcd_clear()
+def display_servo_buzzer_keypad():
+    try:
+        servo.lock()
+        while True:
+            interfaces.d_print(0)
+            
+            character = None
+            character = keypad.read()
+            if character != None:
+                if character == "*":
+                    input = ""
+                    interfaces.output = "____"
+                elif character == "#":
+                    if input == password[0]:
+                        interfaces.d_print(2)
+                        buzzer.play_melody(melodies.round.MELODY, melodies.round.DURATIONS)
+                        user_interface()
+                    elif input == password[1]:
+                        interfaces.d_print(2)
+                        buzzer.play_melody(melodies.round.MELODY, melodies.round.DURATIONS)
+                        admin()
+                    else:
+                        interfaces.d_print(3)
+                        buzzer.play_melody(melodies.rickroll.MELODY, melodies.rickroll.DURATIONS)
+                    interfaces.output = "____"
+                    input = ""
+                elif len(input) < 4:
+                    if character not in invalid:
+                        input = input + character
+                        interfaces.output = ""
+                        i = 0
+                        while i < len(input):
+                            i += 1
+                            interfaces.output += "*"
+                        while len(interfaces.output) < 4:
+                            interfaces.output += "_"
+                    else:
+                        interfaces.d_print(1)
+                        
+    except KeyboardInterrupt:
+        print("\nstopping program")
+        display.lcd_clear()
