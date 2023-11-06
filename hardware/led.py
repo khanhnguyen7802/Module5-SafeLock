@@ -19,22 +19,6 @@ def rc_time(LDR_pin):
 
     return time_diff
 
-def check_brightness():
-
-    """
-    This function turns on LED if the brighness is low enough. Call init_LEDs first!
-    """
-    
-    charge_time = rc_time(LDR_pin)
-    print(charge_time)
-
-    if charge_time > 30:
-        GPIO.output(LED_pin, GPIO.HIGH)
-    else:
-        GPIO.output(LED_pin, GPIO.LOW)
-
-
-
 LDR_pin = 24
 LED_pin = 27
 
