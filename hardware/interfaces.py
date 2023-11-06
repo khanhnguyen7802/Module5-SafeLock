@@ -10,9 +10,15 @@ states = {"lock":0,
           "sounds":6
 }
 
+<<<<<<< HEAD
 STATICS = {0: "      A~unlock      ",
            1: "       A~lock       ",
            2: "                    ",
+=======
+STATICS = {2: "                    ",
+           0: "      A~unlock      ",
+           1: "       A~lock       ",
+>>>>>>> 47cf3eac0cb0cebd4d7f23e2ca7bba39e97d8e2b
            4: "        USER        ",
            5: "        ADMIN       ",
            6: "ON        ",
@@ -24,12 +30,21 @@ interfaces = {0:["-------SAFEty-------", "   Enter password:   ", "        " + o
            3:[" Incorrect password ", STATICS[2], STATICS[2], STATICS[2]],
            4:["        MENU        ", STATICS[2], STATICS[1], STATICS[2]],
            5:["        MENU        ", STATICS[states["lock"]], "     B~Settings     ", "       C~Exit       "],
+<<<<<<< HEAD
            6:["      SETTINGS      ", "     A~Hardware     ", "     B~Password     ", "       C~Exit       "],
            7:["      HARDWARE      ", "A~Lights: " + STATICS[states["lights"]], "B~Sounds: " + STATICS[states["sounds"]], "       C~Exit       "],
            8:["      PASSWORD      ", "       A~User       ", "       B~Admin        ", "       C~Exit       "],
            9:[STATICS[states["user"]], " Enter new password ", "        " + output + "        ", "*~cancel     #~enter"],
            10:[STATICS[2], "       Invalid      ", STATICS[2], "  Minimal 4 digits  "],
            11:["   SECURITY ALERT   ", "Brute force detected", "  Notifying server  ", "            •`_´•             "]
+=======
+           6:["      SETTINGS      ", "     A~Hardware     ", "      B~Password      ", "       C~Exit       "],
+           7:["      HARDWARE      ", "A~Lights: " + STATICS[states["lights"]], "B~Sounds: " + STATICS[states["lights"]], "       C~Exit       "],
+           8:["      PASSWORD      ", "       A~User       ", "       C~Admin        ", "       C~Exit       "],
+           9:[STATICS[states["user"]], " Enter new password ", "        " + output + "        ", "       C~Exit       "],
+           10:[STATICS[2], "       Invalid      ", STATICS[2], "  Minimal 4 digits  "],
+           11:["   SECURITY ALERT   ", "       A~User       ", "       C~Admin        ", "       C~Exit       "]
+>>>>>>> 47cf3eac0cb0cebd4d7f23e2ca7bba39e97d8e2b
 }
 
 DYNAMIC_INTERFACES = [0, 5, 7, 9]
@@ -37,8 +52,13 @@ DYNAMIC_INTERFACES = [0, 5, 7, 9]
 def update():
     new = {0:["-------SAFEty-------", "   Enter password:   ", "        " + output + "        ", "*~clear      #~enter"],
            5:["        MENU         ", STATICS[states["lock"]], "     B~Settings     ", "       C~Exit       "],
+<<<<<<< HEAD
            7:["      HARDWARE      ", "A~Lights: " + STATICS[states["lights"]], "B~Sounds: " + STATICS[states["sounds"]], "       C~Exit       "],
            9:[STATICS[states["user"]], " Enter new password ", "        " + output + "        ", "*~cancel     #~enter"],
+=======
+           7:["      HARDWARE      ", "A~Lights: " + STATICS[states["lights"]], "B~Sounds: " + STATICS[states["lights"]], "       C~Exit       "],
+           9:[STATICS[states["user"]], " Enter new password ", "        " + output + "        ", "       C~Exit       "],
+>>>>>>> 47cf3eac0cb0cebd4d7f23e2ca7bba39e97d8e2b
     }
     interfaces.update(new)
 

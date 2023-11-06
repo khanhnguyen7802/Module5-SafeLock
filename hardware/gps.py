@@ -95,6 +95,7 @@ def power_down(power_key):
     time.sleep(18)
     print('finished')
     
+<<<<<<< HEAD
 try:
     init_gps(power_key)
     get_gps_position()
@@ -103,3 +104,14 @@ except:
     if ser != None:
         ser.close()
         power_down(power_key)
+=======
+def gps_final_working():
+    try:
+        init_gps(power_key)
+        get_gps_position()
+        power_down(power_key)
+    except:
+        if ser != None:
+            ser.close()
+            power_down(power_key)
+>>>>>>> 47cf3eac0cb0cebd4d7f23e2ca7bba39e97d8e2b

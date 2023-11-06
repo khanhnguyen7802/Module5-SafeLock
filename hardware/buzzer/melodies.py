@@ -7,3 +7,7 @@ class rickroll:
 class round:
     MELODY = [t.G4, t.D5, t.F5]
     DURATIONS = [3, 3, 3]
+
+class clapdetected:
+    MELODY = [t.GS4]
+    DURATIONS = [5]

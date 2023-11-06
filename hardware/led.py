@@ -19,6 +19,7 @@ def rc_time(LDR_pin):
 
     return time_diff
 
+<<<<<<< HEAD
 LDR_pin = 24
 LED_pin = 27
 
@@ -34,3 +35,25 @@ while True:
         GPIO.output(LED_pin, GPIO.HIGH)
     else:
         GPIO.output(LED_pin, GPIO.LOW)
+=======
+
+
+def ledstart():
+
+    LDR_pin = 24
+    LED_pin = 27
+
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False) # Ignore warnings
+    GPIO.setup(LED_pin, GPIO.OUT)
+    GPIO.output(LED_pin, GPIO.LOW)
+
+    while True:
+        charge_time = rc_time(LDR_pin)
+        print(charge_time)
+
+        if charge_time > 400:
+            GPIO.output(LED_pin, GPIO.HIGH)
+        else:
+            GPIO.output(LED_pin, GPIO.LOW)
+>>>>>>> 47cf3eac0cb0cebd4d7f23e2ca7bba39e97d8e2b
