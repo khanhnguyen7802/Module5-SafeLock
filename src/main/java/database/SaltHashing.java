@@ -6,26 +6,50 @@ import java.security.SecureRandom;
 import java.util.HexFormat;
 
 public class SaltHashing {
-    public static String saltSHA256(String passwordToHash, byte[] salt) {
-        String finalPassword = "";
+    private static MessageDigest sha256;
+    // generated password is stored encrypted (using also username for hashing)
+    public synchronized static String saltSHA256(String salt, String password) {
+        String fullPassword = salt + password;
 
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
 
-            // Passing the salt to the digest for the computation
-            md.update(salt);
+            StringBuilder builder = new StringBuilder();
+            builder.append(salt);
+            builder.append(password);
 
-            // Add password bytes to digest
-            byte[] bytes = md.digest(passwordToHash.getBytes());
-
-            finalPassword = toHex(bytes);
-
-        } catch (NoSuchAlgorithmException e) {
-            System.err.println("Algorithm does not exist");
+            // first time , encrypt username , password and static key
+            String encryptedCredentials = encryptionIterator(builder.toString());
+            return encryptedCredentials;
         }
-        return finalPassword;
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "";
     }
 
+    private static String encryptionIterator(String content) throws NoSuchAlgorithmException {
+
+
+        try {
+            sha256 = MessageDigest.getInstance("SHA-256");
+            // append the static key to each iteration
+            byte[] passBytes = (content).getBytes();
+            sha256.reset();
+            byte[] digested = sha256.digest(passBytes);
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < digested.length; i++) {
+                sb.append(Integer.toHexString(0xff & digested[i]));
+            }
+
+            return sb.toString();
+        } catch (NoSuchAlgorithmException ex) {
+            ex.printStackTrace();
+        }
+
+        return "";
+    }
 
     // Add salt
     public static byte[] getSalt() throws NoSuchAlgorithmException {
@@ -49,6 +73,7 @@ public class SaltHashing {
 
         return hexFormat.parseHex(str);
     }
+
     public static byte[] fromHex(String hex) {
         int len = hex.length();
         byte[] data = new byte[len / 2];
@@ -57,5 +82,14 @@ public class SaltHashing {
                     + Character.digit(hex.charAt(i + 1), 16));
         }
         return data;
+    }
+
+
+    // for testing
+    public static void main(String[] args) {
+        String password = "1111";
+        String salt = "7c4e324002c571b09b3002f5c97c7c92";
+        String encrypt = saltSHA256(salt,password);
+        System.out.println("Your Password Is '" + encrypt + "'");
     }
 }

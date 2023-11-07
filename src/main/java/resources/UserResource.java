@@ -52,7 +52,7 @@ public class UserResource {
     private boolean isValidUser(String username, String password) {
         User user = UserDatabase.selectUser(username);
         String salt = UserDatabase.getSalt(username);
-        String hashedpassword = SaltHashing.saltSHA256(password,SaltHashing.toByteArray(salt));
+        String hashedpassword = SaltHashing.saltSHA256(SaltHashing.toHex(SaltHashing.toByteArray(salt)),password);
         return user != null && user.getPassword().equals(hashedpassword);
     }
     @POST

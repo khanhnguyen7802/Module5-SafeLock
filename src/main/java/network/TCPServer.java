@@ -48,6 +48,7 @@ public class TCPServer {
                     String newPassword = splits[2];
                     System.out.println(newPassword);
                     if (!newPassword.equals("")) {
+                        System.out.println("update!"+username);
                         UserDatabase.updatePassword(username, newPassword);
                     } else {
                         System.out.println("The password is blank");

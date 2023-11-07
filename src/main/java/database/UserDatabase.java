@@ -29,7 +29,7 @@ public class UserDatabase {
 
             byte[] byteSalt = SaltHashing.getSalt();
             String salt = SaltHashing.toHex(byteSalt);
-            String securePassword = SaltHashing.saltSHA256(user.getPassword(),byteSalt);
+            String securePassword = SaltHashing.saltSHA256(SaltHashing.toHex(byteSalt),user.getPassword());
             statement.setString(2, securePassword);
             statement.setString(3,salt);
 
@@ -64,7 +64,7 @@ public class UserDatabase {
             String query = "UPDATE users SET password = ? WHERE username = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             String salt = getSalt(username);
-            String hashedpassword = SaltHashing.saltSHA256(newPassword,SaltHashing.toByteArray(salt));
+            String hashedpassword = SaltHashing.saltSHA256(SaltHashing.toHex(SaltHashing.toByteArray(salt)),newPassword);
             statement.setString(1, hashedpassword);
             statement.setString(2, username);
             statement.executeUpdate();
@@ -165,7 +165,7 @@ public class UserDatabase {
 
                 // Re-hash the new password with the retrieved salt
                 byte[] byteSalt = SaltHashing.fromHex(storedSalt);
-                String hashedPassword = SaltHashing.saltSHA256(password, byteSalt);
+                String hashedPassword = SaltHashing.saltSHA256(SaltHashing.toHex(byteSalt),password);
 
                 // Check if the new hash matches any of the stored hashes
                 if (storedPassword.equals(hashedPassword)) {
