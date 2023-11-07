@@ -26,8 +26,9 @@ function signup() {
                     ).then(
                     response => {
                         if (response.ok) {
-                            console.log("reach here")
                             window.location.href = "../index.html";
+                        } else {
+                            document.getElementById("mistakeMessage").innerText = "A user with this password could not be made";
                         }
                     }
                 )

@@ -25,6 +25,8 @@ body {
     border-radius: 5px;
     width: 200px;
     margin: 20px;
+    position: relative;
+    bottom:12%;
 }
 
 #bcount {
@@ -168,6 +170,8 @@ h4 {
     border: none;
     cursor: pointer;
     width: 10%;
+    position: relative;
+    bottom: 12%;
 }
 
 .refresher:hover {
