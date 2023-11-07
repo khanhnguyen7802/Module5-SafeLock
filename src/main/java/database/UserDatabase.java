@@ -3,7 +3,6 @@ package database;
 import model.User;
 
 import java.security.NoSuchAlgorithmException;
-import java.security.Security;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UserDatabase {
-    private static final String DB_URL = "jdbc:postgresql://145.126.3.135:5432/project";
+    private static final String DB_URL = "jdbc:postgresql://192.168.87.93:5432/project";
     private static final String USER = "postgres";
     private static final String PASSWORD = "Sairen1360!";
 
@@ -64,7 +63,9 @@ public class UserDatabase {
         try (Connection connection = connect()) {
             String query = "UPDATE users SET password = ? WHERE username = ?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, newPassword);
+            String salt = getSalt(username);
+            String hashedpassword = SaltHashing.saltSHA256(newPassword,SaltHashing.toByteArray(salt));
+            statement.setString(1, hashedpassword);
             statement.setString(2, username);
             statement.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
@@ -152,5 +153,28 @@ public class UserDatabase {
         }
         return null;
     }
+    public static boolean checkPasswordDuplicate(String password) {
+        try (Connection connection = connect()) {
+            String query = "SELECT * FROM users";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
 
+            while (resultSet.next()) {
+                String storedSalt = resultSet.getString("salt");
+                String storedPassword = resultSet.getString("password");
+
+                // Re-hash the new password with the retrieved salt
+                byte[] byteSalt = SaltHashing.fromHex(storedSalt);
+                String hashedPassword = SaltHashing.saltSHA256(password, byteSalt);
+
+                // Check if the new hash matches any of the stored hashes
+                if (storedPassword.equals(hashedPassword)) {
+                    return true;
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

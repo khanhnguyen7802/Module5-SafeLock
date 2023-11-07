@@ -18,8 +18,14 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response signup(@FormParam(USERNAME) String username, @FormParam(PASSWORD) String password) {
         User user = new User(username, password);
-        UserDatabase.insertUser(user);
-        return Response.ok("Signup successful").build();
+        if (UserDatabase.checkPasswordDuplicate(user.getPassword())){
+            System.out.println("password is duplicated");
+            return Response.status(Response.Status.CONFLICT).entity("Password already exists").build();
+        }else{
+            System.out.println("password is unique");
+            UserDatabase.insertUser(user);
+            return Response.ok("Signup successful").build();
+        }
     }
 
     @POST
@@ -39,7 +45,6 @@ public class UserResource {
     public Response updateUser(@FormParam("username") String username, @FormParam("newPassword") String newPassword) {
         // Call the method to update the user's password
         UserDatabase.updatePassword(username, newPassword);
-
         return Response.ok("User information updated").build();
     }
 
