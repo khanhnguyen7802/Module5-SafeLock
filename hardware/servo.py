@@ -16,7 +16,7 @@ def turn(angle):
     servo1.ChangeDutyCycle(0)
 
 def lock():
-    turn(180)
+    turn(70)
 
 def unlock():
-    turn(90)
+    turn(0)

@@ -6,13 +6,13 @@ name = "dany" #replace this with your username
 sys.path.append(f'/home/{name}/Project')
 sys.path.append(f'/home/{name}/Project/buzzer')
 
-
 import keypad
-import drivers
 import servo
 import buzzer
 import melodies
 import interfaces
+import tcp
+import connect
 
 
 keypad.init_keypad(5, 13, 19, 26, 12, 16, 20, 21)
@@ -38,7 +38,6 @@ def admin():
         character = None
         character = keypad.read()
         if character == "A":
-            
             if (interfaces.states["lock"] == 0):
                 state = {"lock":1}
                 interfaces.states.update(state)
@@ -79,16 +78,20 @@ def hardware():
             if (interfaces.states["lights"] == 6):
                 state = {"lights":7}
                 interfaces.states.update(state)
+                tcp.send_data('LED~0')
             else:
                 state = {"lights":6}
                 interfaces.states.update(state)
+                tcp.send_data('LED~1')
         elif character == "B":
             if (interfaces.states["sounds"] == 6):
                 state = {"sounds":7}
                 interfaces.states.update(state)
+                tcp.send_data('BUZZER~0')
             else:
                 state = {"sounds":6}
                 interfaces.states.update(state)
+                tcp.send_data('BUZZER~1')
         elif character == "C":
             quit = True
 
@@ -111,9 +114,11 @@ def change_pass(user):
     interfaces.output = "____"
     input = ""
     if user == 0:
+        update = "UPDATE~user~"
         new = {"user":4}
         interfaces.states.update(new)
     else:
+        update = "UPDATE~admin~"
         new = {"user":5}
         interfaces.states.update(new)
     quit = False
@@ -128,13 +133,13 @@ def change_pass(user):
                 quit = True
             elif character == "#":
                 if len(input) == 4:
-                    new = {user:input}
-                    password.update(new)
-                    print("updated: " + password[user])
+                    tcp.send_data(update + input)
                     input = ""
                     interfaces.output = "____"
                     quit = True
                 else:
+                    input = ""
+                    interfaces.output = "____"
                     interfaces.d_print(10)
                     time.sleep(2)
             elif len(input) < 4:
@@ -150,18 +155,24 @@ def change_pass(user):
                 else:
                     interfaces.d_print(1)
                     time.sleep(2)
-            
-    
-
 
 def start():
-    global password
     global invalid
-    password = {0:"9999",
-                1:"1111"
-    }
+    brute = 0
     input = ""
     invalid = ["A", "B", "C", "D"]
+    if (connect.check_hardware('LED') == 1):
+        state = {"lights":6}
+        interfaces.states.update(state)
+    else:
+        state = {"lights":7}
+        interfaces.states.update(state)
+    if (connect.check_hardware('buzzer') == 1):
+        state = {"sounds":6}
+        interfaces.states.update(state)
+    else:
+        state = {"sounds":7}
+        interfaces.states.update(state)
     while True:
         interfaces.d_print(0)
         
@@ -172,17 +183,23 @@ def start():
                 input = ""
                 interfaces.output = "____"
             elif character == "#":
-                if input == password[0]:
+                if  1 == connect.check_pass(input):
+                    brute = 0
                     interfaces.d_print(2)
                     buzzer.play_melody(melodies.round.MELODY, melodies.round.DURATIONS)
                     user_interface()
-                elif input == password[1]:
+                elif 0 == connect.check_pass(input):
+                    brute = 0
                     interfaces.d_print(2)
                     buzzer.play_melody(melodies.round.MELODY, melodies.round.DURATIONS)
                     admin()
                 else:
                     interfaces.d_print(3)
+                    brute +=1
                     buzzer.play_melody(melodies.rickroll.MELODY, melodies.rickroll.DURATIONS)
+                    if brute == 1:
+                        brute = 0
+                        tcp.send_data("BRUTE")
                 interfaces.output = "____"
                 input = ""
             elif len(input) < 4:
@@ -197,3 +214,5 @@ def start():
                         interfaces.output += "_"
                 else:
                     interfaces.d_print(1)
+                    
+start()

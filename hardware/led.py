@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import time    
+import connect
 
 def rc_time(LDR_pin):
 
@@ -26,11 +27,14 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False) # Ignore warnings
 GPIO.setup(LED_pin, GPIO.OUT)
 GPIO.output(LED_pin, GPIO.LOW)
-while True:
-    charge_time = rc_time(LDR_pin)
-    print(charge_time)
+def start():
+    while True:
+        charge_time = rc_time(LDR_pin)
 
-    if charge_time > 400:
-        GPIO.output(LED_pin, GPIO.HIGH)
-    else:
-        GPIO.output(LED_pin, GPIO.LOW)
+        if charge_time > 200 and connect.check_hardware('LED') == 1:
+            GPIO.output(LED_pin, GPIO.HIGH)
+        else:
+            GPIO.output(LED_pin, GPIO.LOW)
+
+
+start()

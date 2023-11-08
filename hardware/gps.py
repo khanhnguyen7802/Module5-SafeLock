@@ -13,7 +13,6 @@ time_count = 0
 
 def handle_data(data):
     coordinates = data.split(',', 4)
-    print(coordinates)
 
     lat = "35.661910"
     long = "139.708794"
@@ -45,13 +44,11 @@ def send_at(command,back,timeout):
     
     if rec_buff != '':
         received = rec_buff.decode()
-        print(received)
         if back not in received:
             print('ERROR:')
             print(command + ' returned:' + str(received)[2:])
             return 0
         else:
-            print(received[25:])
             handle_data(received[25:])
             return 1
     else:
@@ -61,7 +58,6 @@ def get_gps_position():
     rec_null = True
     answer = 0
     print('Start GPS session....')
-    rec_buff = ''
     send_at('AT+CGPS=1', 'OK', 1)
     
     time.sleep(2)
@@ -85,8 +81,7 @@ def init_gps(powerkey):
     GPIO.output(power_key, GPIO.LOW)
     time.sleep(20)
     ser.flushInput()
-    print('turned on hihi')
-    
+
 def power_down(power_key):
     print('\nturning off')
     GPIO.output(power_key, GPIO.HIGH)
@@ -94,13 +89,15 @@ def power_down(power_key):
     GPIO.output(power_key, GPIO.LOW)
     time.sleep(18)
     print('finished')
-    
-try:
-    init_gps(power_key)
-    get_gps_position()
-    power_down(power_key)
-except:
-    if ser != None:
-        ser.close()
+
+def start():
+    try:
+        init_gps(power_key)
+        get_gps_position()
         power_down(power_key)
-        
+    except:
+        if ser != None:
+            ser.close()
+            power_down(power_key)
+
+start()

@@ -1,5 +1,11 @@
 import RPi.GPIO as GPIO
 import time
+import sys
+
+name = "dany" #replace this with your username
+sys.path.append(f'/home/{name}/Project')
+
+import connect
 
 GPIO.setmode(GPIO.BCM)
 
@@ -19,7 +25,8 @@ def play_tone(frequency, duration):
     tone.stop()
     
 def play_melody(melody, durations):
-    t = 0
-    for tone in melody:
-        play_tone(tone, durations[t])
-        t += 1
+    if (connect.check_hardware('buzzer') == 1):
+        t = 0
+        for tone in melody:
+            play_tone(tone, durations[t])
+            t += 1
