@@ -7,6 +7,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import database.UserDatabase;
 
+/**
+ * Using TCP Server, allowing
+ */
 public class TCPServer {
     public static void main(String[] args) throws Exception {
         ServerSocket serverSocket = new ServerSocket(12345); // Choose a suitable port
@@ -33,6 +36,7 @@ public class TCPServer {
                     System.out.println(newGPS);
                     String point = newGPS.split(",")[0];
                      if (!point.equals("")) {
+                         System.out.println("GPS will be updated");
                          UserDatabase.updateGPS(username, newGPS);
                      }else{
                          System.out.println("the gps point is blank");
@@ -48,6 +52,7 @@ public class TCPServer {
                     String newPassword = splits[2];
                     System.out.println(newPassword);
                     if (!newPassword.equals("")) {
+                        System.out.println("update! "+username);
                         UserDatabase.updatePassword(username, newPassword);
                     } else {
                         System.out.println("The password is blank");
@@ -58,7 +63,17 @@ public class TCPServer {
             }else if (inputData.startsWith("BRUTE")) {
                 System.out.println("Brute Force detected!");
                 UserDatabase.addBrute();
-            }else {
+            } else if (inputData.startsWith("LED")) {
+                System.out.println("LED setting will be changed");
+                String[] splits = inputData.split("~");
+                int setting = Integer.parseInt(splits[1]);
+                UserDatabase.updateLED(setting);
+            } else if (inputData.startsWith("BUZZER")) {
+                System.out.println("BUZZER setting will be changed");
+                String[] splits = inputData.split("~");
+                int setting = Integer.parseInt(splits[1]);
+                UserDatabase.updateBuzzer(setting);
+            } else {
                 System.out.println("Received data: " + inputData);
             }
             socket.close();

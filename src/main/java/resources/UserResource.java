@@ -7,6 +7,9 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import model.User;
 
+/**
+ * Working with URL/Web Interface
+ */
 @Path("/user")
 public class UserResource {
     private static final String USERNAME = "username";
@@ -18,8 +21,14 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response signup(@FormParam(USERNAME) String username, @FormParam(PASSWORD) String password) {
         User user = new User(username, password);
-        UserDatabase.insertUser(user);
-        return Response.ok("Signup successful").build();
+        if (UserDatabase.checkPasswordDuplicate(user.getPassword())){
+            System.out.println("password is duplicated");
+            return Response.status(Response.Status.CONFLICT).entity("Password already exists").build();
+        }else{
+            System.out.println("password is unique");
+            UserDatabase.insertUser(user);
+            return Response.ok("Signup successful").build();
+        }
     }
 
     @POST
@@ -37,17 +46,14 @@ public class UserResource {
     @Path("/update")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response updateUser(@FormParam("username") String username, @FormParam("newPassword") String newPassword) {
-        // Call the method to update the user's password
         UserDatabase.updatePassword(username, newPassword);
-
         return Response.ok("User information updated").build();
     }
-
 
     private boolean isValidUser(String username, String password) {
         User user = UserDatabase.selectUser(username);
         String salt = UserDatabase.getSalt(username);
-        String hashedpassword = SaltHashing.saltSHA256(password,SaltHashing.toByteArray(salt));
+        String hashedpassword = SaltHashing.saltSHA256(SaltHashing.toHex(SaltHashing.toByteArray(salt)),password);
         return user != null && user.getPassword().equals(hashedpassword);
     }
     @POST
