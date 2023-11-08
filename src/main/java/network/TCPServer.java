@@ -59,7 +59,17 @@ public class TCPServer {
             }else if (inputData.startsWith("BRUTE")) {
                 System.out.println("Brute Force detected!");
                 UserDatabase.addBrute();
-            }else {
+            } else if (inputData.startsWith("LED")) {
+                System.out.println("LED setting will be changed");
+                String[] splits = inputData.split("~");
+                int setting = Integer.parseInt(splits[1]);
+                UserDatabase.updateLED(setting);
+            } else if (inputData.startsWith("BUZZER")) {
+                System.out.println("BUZZER setting will be changed");
+                String[] splits = inputData.split("~");
+                int setting = Integer.parseInt(splits[1]);
+                UserDatabase.updateBuzzer(setting);
+            } else {
                 System.out.println("Received data: " + inputData);
             }
             socket.close();

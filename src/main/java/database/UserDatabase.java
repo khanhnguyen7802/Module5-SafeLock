@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UserDatabase {
-    private static final String DB_URL = "jdbc:postgresql://192.168.87.93:5432/project";
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/project";
     private static final String USER = "postgres";
     private static final String PASSWORD = "Sairen1360!";
 
@@ -176,5 +176,25 @@ public class UserDatabase {
             e.printStackTrace();
         }
         return false;
+    }
+    public static void updateLED(int setting) {
+        try (Connection connection = connect()) {
+            String query = "UPDATE settings SET led = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, setting);
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void updateBuzzer(int setting) {
+        try (Connection connection = connect()) {
+            String query = "UPDATE settings SET buzzer = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, setting);
+            statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
