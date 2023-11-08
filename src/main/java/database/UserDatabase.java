@@ -1,7 +1,6 @@
 package database;
 
 import model.User;
-
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,11 +10,14 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * This class makes connection with PostgreSQL
+ * There are lots functions interacting with Database
+ */
 public class UserDatabase {
-    private static final String DB_URL = "jdbc:postgresql://localhost:5432/project";
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/project";//change localhost to IP of Database for other devices
     private static final String USER = "postgres";
     private static final String PASSWORD = "Sairen1360!";
-
     public static Connection connect() throws SQLException, ClassNotFoundException {
         Class.forName("org.postgresql.Driver");
         return DriverManager.getConnection(DB_URL, USER, PASSWORD);
@@ -163,11 +165,9 @@ public class UserDatabase {
                 String storedSalt = resultSet.getString("salt");
                 String storedPassword = resultSet.getString("password");
 
-                // Re-hash the new password with the retrieved salt
                 byte[] byteSalt = SaltHashing.fromHex(storedSalt);
                 String hashedPassword = SaltHashing.saltSHA256(SaltHashing.toHex(byteSalt),password);
 
-                // Check if the new hash matches any of the stored hashes
                 if (storedPassword.equals(hashedPassword)) {
                     return true;
                 }

@@ -17,8 +17,8 @@ public class TestLogin{
         WebTarget target = ClientBuilder.newClient().target(BASE_URL + "/login");
 
         Form form = new Form();
-        form.param("username", "Samthing");
-        form.param("password", "ppap1234");
+        form.param("username", "admin");
+        form.param("password", "1111");
 
         Response response = target.request().post(Entity.form(form));
         assertEquals(200, response.getStatus(), "Valid user login test failed");

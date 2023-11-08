@@ -10,11 +10,8 @@ public class TestUpdate {
     String gps = "TestGPS";
     @Test
     public void testUpdateGPS() {
-
-    // Invoke the updateGPS method
         UserDatabase.updateGPS(username, gps);
 
-    // Check if the update was successful
         String updatedGPS = UserDatabase.getGPS(username);
         assertEquals(gps, updatedGPS);
     }
@@ -24,10 +21,6 @@ public class TestUpdate {
         String username = "testuser";
         String newPassword = "newPassword123";
 
-        // Invoke the updatePassword method
         UserDatabase.updatePassword(username, newPassword);
-
-        // Check if the update was successful
-        // You can add your own implementation here to verify the update
     }
 }

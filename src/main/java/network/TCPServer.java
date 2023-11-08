@@ -7,6 +7,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import database.UserDatabase;
 
+/**
+ * Using TCP Server, allowing
+ */
 public class TCPServer {
     public static void main(String[] args) throws Exception {
         ServerSocket serverSocket = new ServerSocket(12345); // Choose a suitable port
@@ -33,6 +36,7 @@ public class TCPServer {
                     System.out.println(newGPS);
                     String point = newGPS.split(",")[0];
                      if (!point.equals("")) {
+                         System.out.println("GPS will be updated");
                          UserDatabase.updateGPS(username, newGPS);
                      }else{
                          System.out.println("the gps point is blank");
@@ -48,7 +52,7 @@ public class TCPServer {
                     String newPassword = splits[2];
                     System.out.println(newPassword);
                     if (!newPassword.equals("")) {
-                        System.out.println("update!"+username);
+                        System.out.println("update! "+username);
                         UserDatabase.updatePassword(username, newPassword);
                     } else {
                         System.out.println("The password is blank");
