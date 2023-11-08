@@ -214,5 +214,10 @@ def start():
                         interfaces.output += "_"
                 else:
                     interfaces.d_print(1)
-                    
-start()
+
+try:                    
+    start()
+except:
+    print("ending")
+finally:
+    interfaces.d_clear()

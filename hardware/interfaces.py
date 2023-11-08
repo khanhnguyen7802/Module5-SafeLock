@@ -50,3 +50,6 @@ def d_print(number):
     for j in interface:
         display.lcd_display_string(j, i)
         i += 1
+        
+def d_clear():
+    display.lcd_clear()

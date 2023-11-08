@@ -26,4 +26,7 @@ def start():
     while True:
         detect_sound()
 
-start()
+try:
+    start()
+except:
+    print("ending")

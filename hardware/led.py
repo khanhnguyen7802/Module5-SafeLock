@@ -36,5 +36,7 @@ def start():
         else:
             GPIO.output(LED_pin, GPIO.LOW)
 
-
-start()
+try:
+    start()
+except:
+    print("ending")
